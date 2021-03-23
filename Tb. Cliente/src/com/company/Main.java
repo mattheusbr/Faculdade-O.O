@@ -8,23 +8,26 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static Scanner sc = new Scanner(System.in);
-    public static ClienteComum clienteComum = new ClienteComum();
-    final static char CLIENTE_COMUM = 'C';
-    final static char CLIENTE_ESPECIAL = 'E';
+    private static Scanner sc = new Scanner(System.in);
+    private static ClienteComum clienteComum = new ClienteComum();
+    private static ClienteEspecial clienteEspecial = new ClienteEspecial();
+    private final static char CLIENTE_COMUM = 'C';
+    private final static char CLIENTE_ESPECIAL = 'E';
 
     public static void main(String[] args){
 	// write your code here
-
-        System.out.println("Informe o tipo do cliente.");
-        System.out.println("(E) para cliente especial ou (C) para cliente normal.");
-        clienteComum.tipoCliente = sc.next().toUpperCase(Locale.ROOT).charAt(0);
-
         try {
+            System.out.println("Informe o tipo do cliente.");
+            System.out.println("(E) para cliente especial ou (C) para cliente normal.");
+            clienteComum.tipoCliente = sc.next().toUpperCase(Locale.ROOT).charAt(0);
+
+            CriarConta(clienteComum.tipoCliente);
+
+
             if (clienteComum.tipoCliente == CLIENTE_COMUM)
                 MontarMenuClienteC();
             else if(clienteComum.tipoCliente == CLIENTE_ESPECIAL)
-                System.out.println("teste especial");
+                MontarMenuClienteE();
             else
                 System.out.println("Valor inválido. Saindo...");
 
@@ -34,7 +37,7 @@ public class Main {
 
     }
 
-    public static void MontarMenuClienteC() throws IOException {
+    private static void MontarMenuClienteC() throws IOException {
         clear();
 
         Boolean sair = false;
@@ -48,6 +51,7 @@ public class Main {
                     break;
 
                 case 2:
+                    System.out.println("Nome: " + clienteComum.nome);
                     System.out.println("Saldo atual: " + clienteComum.ConsultarSaldo());
                     System.in.read();
                     clear();
@@ -77,6 +81,52 @@ public class Main {
         }
 
     }
+
+    private static void MontarMenuClienteE() throws IOException {
+        clear();
+
+        Boolean sair = false;
+        while (!sair){
+            TextoMenu();
+            switch (sc.nextInt()){
+                case 1:
+                    System.out.println("Valor max. mensalidade financiamento: " + clienteEspecial.Financiar());
+                    System.in.read();
+                    clear();
+                    break;
+
+                case 2:
+                    System.out.println("Nome: " + clienteEspecial.nome);
+                    System.out.println("Saldo atual: " + clienteEspecial.ConsultarSaldo());
+                    System.in.read();
+                    clear();
+                    break;
+
+                case 3:
+                    System.out.println("Digite o valor do depósito: ");
+                    clienteEspecial.Depositar(sc.nextDouble());
+                    clear();
+                    break;
+
+                case 4:
+                    break;
+
+                case 5:
+                    break;
+
+                case 0:
+                    sair = true;
+                    System.out.println("Saindo...");
+                    break;
+
+                default:
+                    System.out.println("Valor inexistente.");
+                    break;
+            }
+        }
+
+    }
+
     private static void TextoMenu(){
         
         System.out.println("=======================================");
@@ -89,9 +139,30 @@ public class Main {
         System.out.println("=======================================");
     }
 
-    public static void clear()
+    private static void CriarConta(char tipoCliente){
+
+        clear();
+        if(tipoCliente == CLIENTE_COMUM){
+            System.out.println("Digite seu nome: ");
+            clienteComum.nome = sc.next();
+
+            System.out.println("Digite seu CPF (sem pontuação): ");
+            clienteComum.cpf = sc.next();
+
+        } else if(tipoCliente == CLIENTE_ESPECIAL){
+            System.out.println("Digite seu nome: ");
+            clienteEspecial.nome = sc.next();
+
+            System.out.println("Digite seu CPF (sem pontuação): ");
+            clienteEspecial.cpf = sc.next();
+        } else
+            System.out.println("Valor inválido. Saindo...");
+    }
+
+    private static void clear()
     {
         for(int i = 0; i < 25; i++)
             System.out.println("");
     }
+
 }
