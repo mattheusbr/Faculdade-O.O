@@ -31,7 +31,9 @@ public class ClienteComum extends Cliente {
 
     @Override
     public void Sacar(double saldo) {
+        this.saldo -= saldo;
 
-
+        qtdMovimentacao++;
+        this.saldoMedio = this.saldo / qtdMovimentacao;
     }
 }

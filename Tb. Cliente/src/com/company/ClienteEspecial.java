@@ -1,9 +1,12 @@
 package com.company;
 
 public class ClienteEspecial extends Cliente{
+
+    private int qtdMovimentacao = 0;
+
     @Override
     public double Financiar() {
-        return 0;
+        return (this.saldoMedio * 0.50);
     }
 
     @Override
@@ -13,7 +16,10 @@ public class ClienteEspecial extends Cliente{
 
     @Override
     public void Depositar(double saldo) {
+        this.saldo += saldo;
 
+        qtdMovimentacao++;
+        this.saldoMedio = this.saldo / qtdMovimentacao;
     }
 
     @Override

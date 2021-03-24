@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -13,23 +11,32 @@ public class Main {
     private static ClienteEspecial clienteEspecial = new ClienteEspecial();
     private final static char CLIENTE_COMUM = 'C';
     private final static char CLIENTE_ESPECIAL = 'E';
-
+    private static Boolean sairMain = false;
     public static void main(String[] args){
-	// write your code here
+
+        char tipoCliente;
         try {
-            System.out.println("Informe o tipo do cliente.");
-            System.out.println("(E) para cliente especial ou (C) para cliente normal.");
-            clienteComum.tipoCliente = sc.next().toUpperCase(Locale.ROOT).charAt(0);
+            while (!sairMain) {
+                System.out.println("Informe o tipo do cliente.");
+                System.out.println("(E) para cliente especial ou (C) para cliente normal.");
+                tipoCliente = sc.next().toUpperCase(Locale.ROOT).charAt(0);
+                CriarConta(tipoCliente);
 
-            CriarConta(clienteComum.tipoCliente);
 
+                switch (tipoCliente) {
+                    case CLIENTE_COMUM:
+                        MontarMenuClienteC();
+                        break;
+                    case CLIENTE_ESPECIAL:
+                        MontarMenuClienteE();
+                        break;
+                    case 't':
+                        break;
+                    default:
+                        System.out.println("Valor inválido. Saindo...");
+                }
+            }
 
-            if (clienteComum.tipoCliente == CLIENTE_COMUM)
-                MontarMenuClienteC();
-            else if(clienteComum.tipoCliente == CLIENTE_ESPECIAL)
-                MontarMenuClienteE();
-            else
-                System.out.println("Valor inválido. Saindo...");
 
         }catch (IOException ex){
             System.out.println("Erro: " + ex.getMessage());
@@ -37,10 +44,11 @@ public class Main {
 
     }
 
-    private static void MontarMenuClienteC() throws IOException {
+    private static char MontarMenuClienteC() throws IOException {
         clear();
-
         Boolean sair = false;
+        Boolean trocarConta = false;
+
         while (!sair){
             TextoMenu();
             switch (sc.nextInt()){
@@ -67,10 +75,20 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("Digite o valor do saque: ");
+                    clienteComum.Sacar(sc.nextDouble());
+                    clear();
+                    break;
+
+                case 6:
+                    sair = true;
+                    sairMain = false;
+                    clear();
                     break;
 
                 case 0:
                     sair = true;
+                    sairMain = true;
                     System.out.println("Saindo...");
                     break;
 
@@ -80,9 +98,14 @@ public class Main {
             }
         }
 
+        if(!sairMain == true)
+            return 't';
+        else
+            return clienteComum.tipoCliente;
+
     }
 
-    private static void MontarMenuClienteE() throws IOException {
+    private static char MontarMenuClienteE() throws IOException {
         clear();
 
         Boolean sair = false;
@@ -112,10 +135,20 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.println("Digite o valor do saque: ");
+                    clienteEspecial.Sacar(sc.nextDouble());
+                    clear();
+                    break;
+
+                case 6:
+                    sair = true;
+                    sairMain = false;
+                    clear();
                     break;
 
                 case 0:
                     sair = true;
+                    sairMain = true;
                     System.out.println("Saindo...");
                     break;
 
@@ -124,6 +157,11 @@ public class Main {
                     break;
             }
         }
+
+        if(!sairMain == true)
+            return 't';
+        else
+            return clienteComum.tipoCliente;
 
     }
 
@@ -135,6 +173,7 @@ public class Main {
         System.out.println("3 - Depositar");
         System.out.println("4 - Transferir");
         System.out.println("5 - Sacar");
+        System.out.println("6 - Mudar tipo de conta");
         System.out.println("0 - Sair");
         System.out.println("=======================================");
     }
@@ -142,7 +181,15 @@ public class Main {
     private static void CriarConta(char tipoCliente){
 
         clear();
+
+        if(((tipoCliente == CLIENTE_COMUM) && (clienteComum.nome != null) && (clienteComum.cpf != null)) ||
+                ((tipoCliente == CLIENTE_ESPECIAL) && (clienteEspecial.nome != null) && (clienteEspecial.cpf != null))){
+            return;
+        }
         if(tipoCliente == CLIENTE_COMUM){
+
+            clienteComum.tipoCliente = CLIENTE_COMUM;
+
             System.out.println("Digite seu nome: ");
             clienteComum.nome = sc.next();
 
@@ -150,13 +197,15 @@ public class Main {
             clienteComum.cpf = sc.next();
 
         } else if(tipoCliente == CLIENTE_ESPECIAL){
+            clienteEspecial.tipoCliente = CLIENTE_ESPECIAL;
+
             System.out.println("Digite seu nome: ");
             clienteEspecial.nome = sc.next();
 
             System.out.println("Digite seu CPF (sem pontuação): ");
             clienteEspecial.cpf = sc.next();
         } else
-            System.out.println("Valor inválido. Saindo...");
+            return;
     }
 
     private static void clear()
