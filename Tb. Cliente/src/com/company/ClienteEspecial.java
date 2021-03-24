@@ -23,12 +23,17 @@ public class ClienteEspecial extends Cliente{
     }
 
     @Override
-    public void Transferir() {
-
+    public void Transferir(double valorTransferir) {
+        ClienteComum cc = new ClienteComum();
+        this.saldo -= valorTransferir;
+        cc.saldo += valorTransferir;
     }
 
     @Override
     public void Sacar(double saldo) {
+        this.saldo -= saldo;
 
+        qtdMovimentacao++;
+        this.saldoMedio = this.saldo / qtdMovimentacao;
     }
 }

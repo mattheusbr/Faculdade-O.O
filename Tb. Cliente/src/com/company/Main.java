@@ -61,6 +61,7 @@ public class Main {
                 case 2:
                     System.out.println("Nome: " + clienteComum.nome);
                     System.out.println("Saldo atual: " + clienteComum.ConsultarSaldo());
+
                     System.in.read();
                     clear();
                     break;
@@ -72,6 +73,19 @@ public class Main {
                     break;
 
                 case 4:
+                    System.out.println("Digite o valor para a transferencia: ");
+                    double valorTransferir = sc.nextDouble();
+                    if(valorTransferir > clienteComum.saldo) {
+                        System.out.println("Saldo insuficiente.");
+                        break;
+                    }
+
+                    System.out.println("Digite o CPF de destinatário.: ");
+                    if(sc.next() == clienteEspecial.cpf){
+                        System.out.println("CPF inválido.");
+                        break;
+                    }
+                    clienteComum.Transferir(valorTransferir);
                     break;
 
                 case 5:
@@ -121,6 +135,7 @@ public class Main {
                 case 2:
                     System.out.println("Nome: " + clienteEspecial.nome);
                     System.out.println("Saldo atual: " + clienteEspecial.ConsultarSaldo());
+
                     System.in.read();
                     clear();
                     break;
@@ -132,6 +147,21 @@ public class Main {
                     break;
 
                 case 4:
+                    System.out.println("Digite o valor para a transferencia: ");
+                    double valorTransferir = sc.nextDouble();
+                    if(valorTransferir > clienteEspecial.saldo) {
+                        System.out.println("Saldo insuficiente.");
+                        System.in.read();
+                        break;
+                    }
+
+                    System.out.println("Digite o CPF de destinatário.: ");
+                    if(sc.next() == clienteComum.cpf){
+                        System.out.println("CPF inválido.");
+                        System.in.read();
+                        break;
+                    }
+                    clienteEspecial.Transferir(valorTransferir);
                     break;
 
                 case 5:
@@ -166,7 +196,8 @@ public class Main {
     }
 
     private static void TextoMenu(){
-        
+
+        clear();
         System.out.println("=======================================");
         System.out.println("1 - Simular Financiamento");
         System.out.println("2 - Consultar Saldo");

@@ -17,6 +17,6 @@ abstract class Cliente {
     public abstract double Financiar();
     public abstract double ConsultarSaldo();
     public abstract void Depositar(double saldo);
-    public abstract void Transferir();
+    public abstract void Transferir(double valorTransferir);
     public abstract void Sacar(double saldo);
 }
