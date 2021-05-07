@@ -11,7 +11,7 @@ public class ClienteEspecial extends Cliente{
 
     @Override
     public double ConsultarSaldo() {
-        return 0;
+        return this.saldo;
     }
 
     @Override

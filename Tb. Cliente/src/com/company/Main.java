@@ -14,6 +14,8 @@ public class Main {
     private static Boolean sairMain = false;
     public static void main(String[] args){
 
+
+
         char tipoCliente;
         try {
             while (!sairMain) {
@@ -81,7 +83,7 @@ public class Main {
                     }
 
                     System.out.println("Digite o CPF de destinatário.: ");
-                    if(sc.next() == clienteEspecial.cpf){
+                    if(sc.next() != clienteEspecial.cpf){
                         System.out.println("CPF inválido.");
                         break;
                     }
@@ -155,8 +157,9 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Digite o CPF de destinatário.: ");
-                    if(sc.next() == clienteComum.cpf){
+                    System.out.println("Digite o CPF de destinatário: ");
+                    String valor = sc.nextLine();
+                    if(valor != clienteComum.cpf){
                         System.out.println("CPF inválido.");
                         System.in.read();
                         break;
