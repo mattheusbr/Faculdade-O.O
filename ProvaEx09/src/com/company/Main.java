@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         Soma soma = new Soma();
-        int numero = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite um número inteiro:"));
+        int numero = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite um número inteiro:", "Digite o valor"));
         int somaNumerosPares = soma.SomaNumerosPares(numero);
         int somaNumerosImpares = soma.SomaNumerosImpares(numero);
 
