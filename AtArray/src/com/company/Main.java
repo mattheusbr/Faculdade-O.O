@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import javax.xml.datatype.DatatypeConfigurationException;
 
 public class Main {
 
@@ -13,6 +14,14 @@ public class Main {
         MesSemana mesSemana = new MesSemana();
         mesSemana.AdicionarMes();
         mesSemana.AdicionarDia();
+
+        try{
+
+        }catch(DatatypeConfigurationException e){
+
+        }finally{
+
+        }
 
         while (!sairMain) {
 
